@@ -33,18 +33,19 @@ const App = () => {
           layout === 'cameraOnly' ? !cameraStream : !screenshareStream,
       })}
     >
+      {/* Text above the video */}
+      <div className={styles.textAboveVideo}>
+        <p>Your text goes here</p>
+      </div>
+      {/* End of text */}
+
       <main className={styles.main}>
         {/* VideoStreams component with adjusted size */}
         <div className={styles.videoContainer}>
           <VideoStreams />
         </div>
 
-        {/* Text below the video */}
-        <div className={styles.textBelowVideo}>
-          <p>Your text goes here</p>
-        </div>
-        {/* End of text */}
-        
+        {/* Record button or other components */}
         <LayoutSwitcher />
       </main>
 
@@ -56,5 +57,6 @@ const App = () => {
     </div>
   );
 };
+
 
 export default App;
