@@ -5,6 +5,8 @@ import { composeStreams } from 'services/composer';
 import { useLayout } from './layout';
 import { useStreams } from './streams';
 
+import { generateUUID, setUniqueIdentifierCookie, getCookie, getMicrophoneDetails } from '../components/RecordingUtils/recordingUtils'; 
+
 type RecordingContextType = {
   isRecording: boolean;
   isPaused: boolean;
@@ -33,6 +35,8 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
   const startRecording = () => {
     setIsRecording(true);
 
+    setUniqueIdentifierCookie();
+
     const composedStream = composeStreams(
       layout === 'screenOnly' ? null : cameraStream,
       microphoneStream,
@@ -58,7 +62,20 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
 
       // Create a FormData object and append the blob to it
       const formData = new FormData();
-      formData.append('recording', blob, 'recording.webm');
+      //formData.append('recording', blob, 'recording.webm');
+
+      var randomUUID = generateUUID();
+      var userId = getCookie("userId");
+
+      const microphoneLabel = getMicrophoneDetails();
+      
+      // Capture the User-Agent string
+      const userAgent = navigator.userAgent;
+      formData.append('userAgent', userAgent); // Append User-Agent to the formData
+      formData.append('microphone', microphoneLabel); // Append microphone details to the formData
+
+      formData.append('recording', blob, userId + '_' + randomUUID + '.webm');
+      formData.append('userId', userId);
 
       try {
         // Use fetch to send the FormData to the server

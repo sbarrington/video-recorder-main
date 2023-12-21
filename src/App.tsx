@@ -35,7 +35,17 @@ const App = () => {
     >
       {/* Text above the video */}
       <div className={styles.textAboveVideo}>
-        <p>Your text goes here</p>
+        <p>Video Recorder App</p>
+        <p>Please use this webpage to record yourself responding to the prompts given to you in the study.</p>
+        <ul class="round-bullets">
+                <li>To record, press 'start recording'.</li>
+                <li>To stop the recording, press 'stop recording'.</li>
+            </ul>
+        <p> Once you have completed recording:</p>
+        <ul class="round-bullets">
+                <li>A 'recording identifier' will be provided in blue. Copy this back into your survey response.</li>
+                <li>You can re-record yourself as many times as you wish, but only paste the final identifier into the Turk response.</li>
+            </ul>
       </div>
       {/* End of text */}
 

@@ -43,13 +43,9 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         ////cb(null, file.originalname.split('_').slice(1).join('_')); // Remove the userId from the filename
-        const uniqueFilename = `${Date.now()}_${file.originalname}`;
+        const uniqueFilename = `${file.originalname}`;
         cb(null, uniqueFilename);
     }
-});
-
-app.get('/randomId', (req, res) => {
-    res.send(randomId); // Send the randomId as the response
 });
 
 const upload = multer({ storage: storage });
