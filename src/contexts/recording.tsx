@@ -49,20 +49,32 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
       if (event.data.size > 0) chunks.push(event.data);
     };
 
-    mediaRecorder.current.onstop = () => {
+    mediaRecorder.current.onstop = async () => {
       composedStream
         .getVideoTracks()
         .forEach((composedTrack) => composedTrack.stop());
 
       const blob = new Blob(chunks);
 
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'recording.webm';
-      link.click();
+      // Create a FormData object and append the blob to it
+      const formData = new FormData();
+      formData.append('recording', blob, 'recording.webm');
 
-      window.URL.revokeObjectURL(url);
+      try {
+        // Use fetch to send the FormData to the server
+        const response = await fetch('http://localhost:2000/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (response.ok) {
+          console.log('Recording successfully uploaded!');
+        } else {
+          console.error('Failed to upload recording.');
+        }
+      } catch (error) {
+        console.error('Error uploading recording:', error);
+      }
     };
 
     mediaRecorder.current.start();
