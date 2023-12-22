@@ -1,7 +1,7 @@
 .root {
   display: grid;
   position: absolute;
-  bottom: 24px;
+  top: calc(100% + 10px);
   left: 50%;
   grid-auto-columns: 1fr;
   grid-auto-flow: column;

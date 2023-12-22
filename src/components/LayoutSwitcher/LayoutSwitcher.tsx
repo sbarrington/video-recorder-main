@@ -4,8 +4,6 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Layout, useLayout } from 'contexts/layout';
 
 import CameraOnlyIcon from './icons/CameraOnlyIcon';
-import ScreenAndCameraIcon from './icons/ScreenAndCameraIcon';
-import ScreenOnlyIcon from './icons/ScreenOnlyIcon';
 
 import styles from './LayoutSwitcher.module.css';
 

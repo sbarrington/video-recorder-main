@@ -1,6 +1,6 @@
 import cx from 'classnames';
 
-import RecordButton from 'components/RecordButton';
+//import RecordButton from 'components/RecordButton';
 import { useCountdown } from 'contexts/countdown';
 import { useLayout } from 'contexts/layout';
 import { usePictureInPicture } from 'contexts/pictureInPicture';
@@ -17,9 +17,8 @@ const MainRecordButton = () => {
   const { startScreenshare } = useScreenshare();
 
   return (
-    <RecordButton
+    <button
       className={cx(styles.root, { [styles.recording]: isRecording })}
-      classes={{ icon: styles.icon }}
       onClick={async () => {
         if (countingDown) {
           return;
@@ -34,7 +33,9 @@ const MainRecordButton = () => {
           await startScreenshare();
         }
       }}
-    />
+    >
+      {isRecording ? 'Stop Recording' : "I'm ready to start"}
+    </button>
   );
 };
 

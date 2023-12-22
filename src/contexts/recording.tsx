@@ -67,7 +67,7 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
       var randomUUID = generateUUID();
       var userId = getCookie("userId");
 
-      const microphoneLabel = getMicrophoneDetails();
+      const microphoneLabel = await getMicrophoneDetails();
       
       // Capture the User-Agent string
       const userAgent = navigator.userAgent;
@@ -75,7 +75,10 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
       formData.append('microphone', microphoneLabel); // Append microphone details to the formData
 
       formData.append('recording', blob, userId + '_' + randomUUID + '.webm');
-      formData.append('userId', userId);
+      if (userId !== null) {
+        // Append userId to the formData
+        formData.append('userId', userId);
+      }
 
       try {
         // Use fetch to send the FormData to the server

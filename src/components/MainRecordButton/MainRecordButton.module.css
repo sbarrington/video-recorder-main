@@ -1,8 +1,10 @@
 .root {
-  margin-block: -4px;
-}
-
-.recording .icon {
-  transform: scale(0.5);
+  /* Add styles for the red rectangle appearance */
+  background-color: red;
+  color: white; /* Text color */
+  padding: 10px 20px; /* Adjust padding as needed */
+  border: none;
   border-radius: 8px;
+  cursor: pointer;
+  /* Add other styles as needed */
 }
