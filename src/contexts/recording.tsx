@@ -14,9 +14,11 @@ type RecordingContextType = {
   stopRecording: () => void;
   pauseRecording: () => void;
   resumeRecording: () => void;
+  randomUUID: string | null;
+  setRandomUUID: (uuid: string | null) => void;
 };
 
-const RecordingContext = createContext<RecordingContextType | undefined>(
+export const RecordingContext = createContext<RecordingContextType | undefined>(
   undefined,
 );
 
@@ -30,6 +32,7 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
   const [isPaused, setIsPaused] = useState(false);
   const { cameraStream, microphoneStream, screenshareStream } = useStreams();
 
+  const [randomUUID, setRandomUUID] = useState<string | null>(null);
   const mediaRecorder = useRef<MediaRecorder>();
 
   const startRecording = () => {
@@ -65,6 +68,7 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
       //formData.append('recording', blob, 'recording.webm');
 
       var randomUUID = generateUUID();
+      setRandomUUID(randomUUID);
       var userId = getCookie("userId");
 
       const microphoneLabel = await getMicrophoneDetails();
@@ -125,6 +129,8 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
         stopRecording,
         pauseRecording,
         resumeRecording,
+        randomUUID,
+        setRandomUUID,
       }}
     >
       {children}

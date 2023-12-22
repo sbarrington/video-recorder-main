@@ -1,4 +1,5 @@
 import cx from 'classnames';
+import React, { useContext } from 'react';
 
 import Footer from 'components/Footer';
 import LayoutSwitcher from 'components/LayoutSwitcher';
@@ -11,6 +12,8 @@ import { useStreams } from 'contexts/streams';
 import useKeyboardShorcut from 'hooks/useKeyboardShortcut';
 
 import MainRecordButton from 'components/MainRecordButton';
+import { RandomUUIDProvider } from 'contexts/RandomUUIDContext';
+import { RecordingContext } from 'contexts/recording';
 
 import styles from './App.module.css';
 
@@ -18,6 +21,8 @@ const App = () => {
   const { layout } = useLayout();
   const { cameraStream, screenshareStream } = useStreams();
   const { pipWindow } = usePictureInPicture();
+  const { randomUUID } = useContext(RecordingContext); // Access the randomUUID from context
+
   const {
     cameraEnabled,
     microphoneEnabled,
@@ -28,7 +33,20 @@ const App = () => {
   useKeyboardShorcut('e', () => setCameraEnabled(!cameraEnabled));
   useKeyboardShorcut('d', () => setMicrophoneEnabled(!microphoneEnabled));
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(randomUUID)
+      .then(() => {
+        console.log('UUID copied to clipboard!');
+        // You can also implement a notification to the user here
+      })
+      .catch(err => {
+        console.error('Failed to copy UUID: ', err);
+      });
+  };
+
+
   return (
+    <RandomUUIDProvider>
     <div
       className={cx(styles.root, {
         [styles.placeholder]:
@@ -50,6 +68,13 @@ const App = () => {
         </ul>
       </div>
       {/* End of text */}
+      {randomUUID && (
+        <p>
+        Recording Identifier: <span style={{ color: 'blue' }}>{randomUUID}</span>
+        {' '} {/* This adds a space */}
+        <button onClick={copyToClipboard}>Copy to Clipboard</button>
+      </p>
+      )}
 
       <main className={styles.main}>
         {/* VideoStreams component with adjusted size */}
@@ -70,6 +95,7 @@ const App = () => {
       {/* PiPWindow component */}
       {pipWindow && <PiPWindow pipWindow={pipWindow} />}
     </div>
+    </RandomUUIDProvider>
   );
 };
 
