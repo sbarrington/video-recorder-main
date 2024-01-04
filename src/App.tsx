@@ -57,13 +57,15 @@ const App = () => {
       <div className={styles.textAboveVideo}>
         <p><strong>Video Recorder App</strong></p>
         <p>Please use this webpage to record yourself responding to the prompts given to you in the study.</p>
+        <p>A preview of your camera can be seen below.</p>
         <ul className={styles.roundBullets}>
-          <li>To record, press 'start recording'.</li>
-          <li>To stop the recording, press 'stop recording'.</li>
+          <li>Launch the recording window by clicking 'launch recorder' in the preview below.</li>
+          <li>In the recording window, click the record button when you are ready to record.</li>
+          <li>To stop the recording, press the stop recording button..</li>
         </ul>
         <p>Once you have completed recording:</p>
         <ul className={styles.roundBullets}>
-          <li>A 'recording identifier' will be provided in blue. Copy this back into your survey response.</li>
+          <li>A 'recording identifier' will be provided below this text in blue. Copy this back into your survey response.</li>
           <li>You can re-record yourself as many times as you wish, but only paste the final identifier into the Turk response.</li>
         </ul>
       </div>

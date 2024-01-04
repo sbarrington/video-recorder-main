@@ -34,7 +34,7 @@ const MainRecordButton = () => {
         }
       }}
     >
-      {isRecording ? 'Stop Recording' : "I'm ready to start"}
+      {isRecording ? 'Stop Recording' : "Launch recorder"}
     </button>
   );
 };
