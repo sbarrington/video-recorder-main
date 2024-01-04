@@ -16,6 +16,9 @@ type RecordingContextType = {
   resumeRecording: () => void;
   randomUUID: string | null;
   setRandomUUID: (uuid: string | null) => void;
+  resetUUID: () => void;
+  videoBlobUrl: string | null; // Add this line
+  handleRecordingComplete: (blob: Blob) => void; // Add this line
 };
 
 export const RecordingContext = createContext<RecordingContextType | undefined>(
@@ -34,6 +37,19 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
 
   const [randomUUID, setRandomUUID] = useState<string | null>(null);
   const mediaRecorder = useRef<MediaRecorder>();
+
+  const resetUUID = () => {
+    setRandomUUID(null);
+  };
+
+  const [videoBlobUrl, setVideoBlobUrl] = useState<string | null>(null);
+
+  const handleRecordingComplete = (blob) => {
+    const url = URL.createObjectURL(blob);
+    console.log("Blob URL:", url); // Check if the URL is being logged
+    setVideoBlobUrl(url);
+  };
+  
 
   const startRecording = () => {
     setIsRecording(true);
@@ -131,6 +147,9 @@ export const RecordingProvider = ({ children }: RecordingProviderProps) => {
         resumeRecording,
         randomUUID,
         setRandomUUID,
+        resetUUID,
+        videoBlobUrl,
+        handleRecordingComplete,
       }}
     >
       {children}

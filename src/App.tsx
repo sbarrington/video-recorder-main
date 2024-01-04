@@ -23,6 +23,8 @@ const App = () => {
   const { pipWindow } = usePictureInPicture();
   const { randomUUID } = useContext(RecordingContext); // Access the randomUUID from context
 
+  const { videoBlobUrl } = useContext(RecordingContext);
+  
   const {
     cameraEnabled,
     microphoneEnabled,
@@ -76,6 +78,10 @@ const App = () => {
         {' '} {/* This adds a space */}
         <button onClick={copyToClipboard}>Copy to Clipboard</button>
       </p>
+      )}
+
+      {videoBlobUrl && (
+        <video src={videoBlobUrl} controls style={{ width: '100%' }} />
       )}
 
       <main className={styles.main}>

@@ -12,7 +12,7 @@ import styles from './MainRecordButton.module.css';
 const MainRecordButton = () => {
   const { countingDown, setCountingDown } = useCountdown();
   const { layout } = useLayout();
-  const { isRecording } = useRecording();
+  const { isRecording, resetUUID } = useRecording();
   const { pipWindow, requestPipWindow } = usePictureInPicture();
   const { startScreenshare } = useScreenshare();
 
@@ -25,12 +25,15 @@ const MainRecordButton = () => {
         }
         if (isRecording) {
           pipWindow?.close();
-        } else if (pipWindow) {
-          setCountingDown(true);
-        } else if (layout === 'cameraOnly') {
-          await requestPipWindow();
         } else {
-          await startScreenshare();
+          resetUUID(); // Reset UUID when preparing to launch the recorder
+          if (pipWindow) {
+            setCountingDown(true);
+          } else if (layout === 'cameraOnly') {
+            await requestPipWindow();
+          } else {
+            await startScreenshare();
+          }
         }
       }}
     >
